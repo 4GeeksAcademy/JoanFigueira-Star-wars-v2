@@ -1,25 +1,27 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			host : 'https://3000-hchocobar-chocobarnetba-4wsir07tmvx.ws-us116.gitpod.io',
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
+			demo: [{title: "FIRST", background: "white", initial: "white"},
+				{title: "SECOND", background: "white", initial: "white"}],
+			user: 'Joan',
+			cohorte: 'Spain-77',
+			number: 25,
+			isLoged: false,
+			publications: [],
+			currentPublications: {},
+			alert : {
+				text: 'A simple alert-check it out!',
+				background: 'danger',
+				visible: true,
+			}
+			},
+
+
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+			exampleFunction: () => {getActions().changeColor(0, "green");},
 
 			getMessage: async () => {
 				try{
@@ -46,6 +48,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			setIsLoged: (newState) => { setStore ( {isLoged:newState} )
+
 			}
 		}
 	};
