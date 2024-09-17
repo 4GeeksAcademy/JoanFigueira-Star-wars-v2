@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
+import { Spinner } from "./Spinner.jsx";
+import { BtnFavorites } from "./BtnFavorites.jsx";
 
 export const Navbar = () => {
 
   return (
     <div className="container-flex bg-secondary m-0">
-      <nav className="navbar navbar-expand-lg">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
@@ -17,28 +19,19 @@ export const Navbar = () => {
           </div>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav ps-5">
-              <Link to="/">
+              <Link to="/characters">
                 <span className="text-light nav-link" aria-current="">Characters</span>
               </Link>
-              <Link to="/" className="nav-item">
+              <Link to="/planets" className="nav-item">
                 <span className="text-light nav-link">Planets</span>
               </Link>
-              <Link to="/" className="nav-item">
+              <Link to="/starships" className="nav-item">
                 <span className="text-light nav-link">Starships</span>
               </Link>
               <Link to="/contact">
                 <span className="text-light nav-link">Contact</span>
               </Link>
-              <li className="nav-item dropdown">
-                <span className="text-light nav-link dropdown-toggle btn btn-sm btn-secondary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Favorites
-                </span>
-                <ul className="dropdown-menu">
-                  <li><span className="dropdown-item">Action</span></li>
-                  <li><span className="dropdown-item">Another</span></li>
-                  <li><span className="dropdown-item">Something</span></li>
-                </ul>
-              </li>
+              <BtnFavorites/>
             </ul>
           </div>
         </div>

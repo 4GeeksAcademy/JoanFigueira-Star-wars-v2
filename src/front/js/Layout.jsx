@@ -13,6 +13,13 @@ import { Single } from "./pages/Single.jsx";
 import { AddContact } from "./pages/AddContact.jsx";
 import { Contact } from "./pages/Contact.jsx";
 import { EditContact } from "./pages/EditContact.jsx";
+import { Characters } from "./pages/Characters.jsx";
+import { Planets } from "./pages/Planets.jsx";
+import { Starships } from "./pages/Starships.jsx";
+import { PlanetsDetails } from "./pages/PlanetsDetails.jsx";
+import { StarshipsDetails } from "./pages/StarshipsDetails.jsx";
+import { CharacterDetails } from "./pages/CharactersDetails.jsx";
+
 
 
 
@@ -36,6 +43,15 @@ const Layout = () => {
                         <Route element={<AddContact />} path="/add-contact" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<EditContact />} path="/edit-contact" />
+                        <Route element={<Characters />} path="/characters" />
+                        <Route element={<Planets />} path="/planets" />
+                        <Route element={<Starships />} path="/starships" />
+                        <Route element={<CharacterDetails />} path="/characterdetail/:personaje" />
+                        <Route element={<PlanetsDetails />} path="/planetsdetails/:planeta" />
+                        <Route element={<StarshipsDetails />} path="/starshipsdetails/:nave" />
+
+
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>
