@@ -32,36 +32,36 @@ export const EditContact = () => {
 
 
   return (
-    <form className="bg-light" onSubmit={handleSubmit}>
+    <form className="bg-secondary" onSubmit={handleSubmit}>
       <div className="container">
         <div className="mb-3">
-          <h3 className="text-center">Edit Contact</h3>
-          <label htmlFor="text" className="form-label">Full Name</label>
+          <h3 className="text-center text-light pt-5">Edit Contact</h3>
+          <label htmlFor="text" className="form-label text-light">Full Name</label>
           <input type="text" className="form-control" id="fullname" placeholder="Full Name"
             value={name} onChange={(event) => setName(event.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="inputEmail" className="form-label">Email</label>
+          <label htmlFor="inputEmail" className="form-label text-light">Email</label>
           <input type="email" className="form-control" id="email" placeholder="Enter email"
             value={email} onChange={(event) => setEmail(event.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="text" className="form-label">Phone</label>
+          <label htmlFor="text" className="form-label text-light">Phone</label>
           <input type="text" className="form-control" id="inputPhone" placeholder="Enter phone"
             value={phone} onChange={(event) => setPhone(event.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="text" className="form-label">Address</label>
+          <label htmlFor="text" className="form-label text-light">Address</label>
           <input type="text" className="form-control" id="inputAddress" placeholder="Enter adress"
             value={address} onChange={(event) => setAddress(event.target.value)} />
         </div>
-        <div className="d-grid gap-2">
+        <div className="d-grid gap-2 col-6 mx-auto">
           <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </div>
       <div className="container">
         <Link to="/contact">
-          <span className="navbar-brand">back to contact</span>
+          <span className="navbar-brand text-warning">back to contact</span>
         </Link>
       </div>
     </form>

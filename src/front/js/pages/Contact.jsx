@@ -24,9 +24,9 @@ export const Contact = () => {
   return (
 
     <>
-    <div className="bg-secondary d-grid gap-2 d-md-flex justify-content-md-end pe-5 pt-5">
+    <div className="bg-secondary d-grid gap-5 d-md-flex justify-content-md-end pe-5 pt-5">
     <Link to="/add-contact">
-      <button type="button" className="btn btn-warning btn-sm me-6">Add contact</button>
+      <button type="button" className="btn btn-warning btn-sm me-6 text-dark">Add contact</button>
     </Link>
     </div>
     <div className="d-flex flex-column flex-lg-row p-3 gap-3 py-lg-5 align-items-center justify-content-center bg-secondary">
