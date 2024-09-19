@@ -31,7 +31,7 @@ export const Characters = () => {
                                             <button type="button" className="btn btn-sm btn-outline-secondary">Details</button>
                                         </Link>
                                     </div>
-                                        <span type="button" onClick={() => actions.addFavorites({name: item.name, type: 'character'})} className="text-body-secondary"><i className="fa-solid fa-heart text-warning"></i></span>
+                                        <span type="button" onClick={() => actions.addFavorites({name: item.name, type: 'Character'})} className="text-body-secondary"><i className="fa-solid fa-heart text-warning"></i></span>
                                 </div>
                             </div>
                         </div>

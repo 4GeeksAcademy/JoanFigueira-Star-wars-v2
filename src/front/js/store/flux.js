@@ -12,11 +12,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			starships: [],
 			starshipsDetails: [],
 			favorites: [],
-			
+
 			demo: [{ title: "FIRST", background: "white", initial: "white" },
 			{ title: "SECOND", background: "white", initial: "white" }],
 			currentContact: {},
-			currentFavorite: {},
 		},
 
 		actions: {
@@ -175,10 +174,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				console.log(data);
-				setStore({planets: data.results})
+				setStore({ planets: data.results })
 			},
 
-			getPlanetsDetails : async () => {
+			getPlanetsDetails: async () => {
 				const response = await fetch(`${getStore().swapi_dev}/planets`)
 				if (!response.ok) {
 					return
@@ -188,20 +187,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ planetsDetails: data.results })
 			},
 
-			addFavorite: async () => {
-				const response = await fetch(`${getStore().swapi_dev}`)
-				if (!response.ok) {
-					return
+
+			addFavorites: (newFavorites) => {
+				if (!getStore().favorites.some(favorites => favorites.name === newFavorites.name)) {
+					setStore({ favorites: [...getStore().favorites, newFavorites] });
 				}
-				const data = await response.json();
-				console.log (data)
-				setStore({ favorites: data.results})
 			},
 
-			setCurrentFavorite : (newFavorite) => {setStore ({currentFavorite: newFavorite})},
 
-			removeFavorites: () => {
-
+			removeFavorites: (item) => {
+				const newFavorite = getStore().favorites.filter((element) => element !== item)
+				setStore({ favorites: newFavorite })
 			},
 
 		}

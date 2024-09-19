@@ -24,9 +24,7 @@ export const Starships = () => {
                                             <button type="button" className="btn btn-sm btn-outline-secondary">Details</button>
                                         </Link>
                                     </div>
-                                    <Link to="/">
-                                        <small className="text-body-secondary"><i className="fa-solid fa-heart text-warning"></i></small>
-                                    </Link>
+                                        <span onClick={() => actions.addFavorites({name: item.name, type: 'Starship'})} className="text-body-secondary"><i className="fa-solid fa-heart text-warning"></i></span>
                                 </div>
                             </div>
                         </div>
