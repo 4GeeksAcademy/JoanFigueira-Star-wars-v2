@@ -42,10 +42,10 @@ export const Contact = () => {
               </div>
               <small className="text-nowrap">
                 <button type="button" className="btn" onClick={() => editContact(item)}>
-                  <i className="fa-solid fa-pencil"></i>
+                  <i className="fa-solid fa-pencil text-primary"></i>
                 </button>
                 <button type="button" className="btn" onClick={() => deleteContact(item.id)}>
-                  <i className="fa-solid fa-trash"></i>
+                  <i className="fa-solid fa-trash text-danger"></i>
                 </button>
               </small>
             </div>
