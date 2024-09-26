@@ -18,4 +18,3 @@ class Users(db.Model):
         return {'id': self.id,
                 'email': self.email,
                 'is_active': self.is_active}
-    
