@@ -16,7 +16,7 @@ ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-# Database condiguration
+# Database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
@@ -26,9 +26,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 # Other configurations
-setup_admin(app) # Add the admin
-setup_commands(app) # Add the admin
-app.register_blueprint(api, url_prefix='/api') # Add all endpoints form the API with a "api" prefix
+setup_admin(app)  # Add the admin
+setup_commands(app)  # Add the admin
+app.register_blueprint(api, url_prefix='/api')  # Add all endpoints form the API with a "api" prefix
 
 
 # Handle/serialize errors like a JSON object
