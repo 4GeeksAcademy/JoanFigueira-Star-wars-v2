@@ -21,7 +21,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+				getActions().changeColor(0, "green");},
+
+			login: async () => {
+				const uri = '';
+				const options = {}
+				const response = await fetch (uri,options);
+				if (!response.ok){
+					// tratamos el error
+					// nuestro back nos devuelve 401
+					console.log('Error', response.status, response.statusText)
+				}
+				const data = await response.json()
+				
 			},
 
 			getMessage: async () => {
@@ -187,13 +199,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ planetsDetails: data.results })
 			},
 
-
 			addFavorites: (newFavorites) => {
 				if (!getStore().favorites.some(favorites => favorites.name === newFavorites.name)) {
 					setStore({ favorites: [...getStore().favorites, newFavorites] });
 				}
 			},
-
 
 			removeFavorites: (item) => {
 				const newFavorite = getStore().favorites.filter((element) => element !== item)

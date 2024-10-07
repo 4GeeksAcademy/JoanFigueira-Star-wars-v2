@@ -31,6 +31,9 @@ export const Navbar = () => {
               <Link to="/contact">
                 <span className="text-light nav-link">Contact</span>
               </Link>
+              <Link to="/login">
+                <span className="text-light nav-link">Login</span>
+              </Link>
               <BtnFavorites/>
             </ul>
           </div>
