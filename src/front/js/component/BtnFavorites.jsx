@@ -8,9 +8,9 @@ export const BtnFavorites = () => {
     <div className="btn-group ps-2">
       <button className="btn btn-warning btn-sm dropdown-toggle text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         Favorites
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           {store.favorites.length}
-          <span class="visually-hidden">unread messages</span>
+          <span className="visually-hidden">unread messages</span>
         </span>
       </button>
       <ul className="dropdown-menu dropdown-menu-sm-end">
