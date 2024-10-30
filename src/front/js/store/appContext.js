@@ -30,6 +30,7 @@ const injectContext = PassedComponent => {
 		useEffect(() => {
 			//---- calling this function from the flux.js actions
 			//state.actions.getMessage(); 
+			state.actions.isLogged();
 			state.actions.getContact();
 			state.actions.getCharacters();
 			state.actions.getPlanets();

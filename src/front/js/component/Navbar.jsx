@@ -1,10 +1,20 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { Spinner } from "./Spinner.jsx";
 import { BtnFavorites } from "./BtnFavorites.jsx";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context)
+  const navigate = useNavigate()
+
+  const handleLogin = () => {
+    if (store.isLoged) {
+      actions.logout();
+    } else {
+      navigate('/login')
+    }
+  }
 
   return (
     <div className="container-flex bg-secondary m-0">
@@ -13,7 +23,7 @@ export const Navbar = () => {
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               <Link to="/">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy8z_qqYM-YX6ncpGrJV_fOln6GF3LPe2bXQ&" alt="Logo" width="80" height="50" className="d-inline-block align-text-top" />
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy8z_qqYM-YX6ncpGrJV_fOln6GF3LPe2bXQ&" alt="Logo" width="80" height="50" className="d-inline-block align-text-top" />
               </Link>
             </Link>
           </div>
@@ -31,10 +41,8 @@ export const Navbar = () => {
               <Link to="/contact">
                 <span className="text-light nav-link">Contact</span>
               </Link>
-              <Link to="/login">
-                <span className="text-light nav-link">Login</span>
-              </Link>
-              <BtnFavorites/>
+              <button className="btn btn-primary" onClick={handleLogin}> {store.isLoged ? 'LogOut' : 'LogIn'} </button>
+              <BtnFavorites />
             </ul>
           </div>
         </div>

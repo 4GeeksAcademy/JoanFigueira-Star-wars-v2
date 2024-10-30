@@ -12,6 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			starships: [],
 			starshipsDetails: [],
 			favorites: [],
+			isLoged: false,
+			user: '',
 
 			demo: [{ title: "FIRST", background: "white", initial: "white" },
 			{ title: "SECOND", background: "white", initial: "white" }],
@@ -20,21 +22,130 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");},
+			exampleFunction: () => {getActions().changeColor(0, "green");},
 
-			login: async () => {
-				const uri = '';
-				const options = {}
+			login: async (dataToSend) => {
+				const uri = `https://glorious-umbrella-v6gpw99597w72rj-3001.app.github.dev/api/login`;
+				const options = {
+					method: 'POST',
+					headers: {
+						"Content-Type": 'application/json'
+					},
+					body: JSON.stringify(dataToSend)
+				}
+				
 				const response = await fetch (uri,options);
 				if (!response.ok){
 					// tratamos el error
-					// nuestro back nos devuelve 401
-					console.log('Error', response.status, response.statusText)
+					// Back devuelve 401
+					console.log('Error', response.status, response.statusText);
 				}
 				const data = await response.json()
-				
+				console.log(data);
+				localStorage.setItem('token', data.access_token)
+				localStorage.setItem('user', JSON.stringify(data.results))
+				setStore({isLoged: true, user: data.results.email})
 			},
+
+			logout: () => {
+				setStore({isLoged: false, user: ''});
+				localStorage.removeItem('token')
+				localStorage.removeItem('user')
+			},
+
+			isLogged: () => {
+				const token = localStorage.getItem('token')
+				if (token) {
+					//recuperamos el usuario
+					const userData = JSON.parse(localStorage.getItem('user'));
+					console.log(userData);
+					setStore({isLoged: true, user: userData.email})
+				}
+			},
+
+			accessProtected: async () => {
+				const token = localStorage.getItem('token')
+				const uri = `https://glorious-umbrella-v6gpw99597w72rj-3001.app.github.dev/api/protected`;
+				const options = {
+					method: 'GET',
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`
+					}
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					//error
+					console.log('error', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				console.log(data);
+			},
+
+			getPosts: async () => {
+				const token = localStorage.getItem('token')
+				const uri = `https://glorious-umbrella-v6gpw99597w72rj-3001.app.github.dev/api/posts`;
+				const options = {
+					method: 'GET',
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`
+					}
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					//error
+					console.log('error', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				console.log(data);
+			},
+
+			getPost: async (id) => {
+				const token = localStorage.getItem('token')
+				const uri = `${process.env.BACKEND_URL}/api/posts/${id}`;
+				const options = {
+					method: 'GET',
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`
+					}
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					// error 403
+					if (response.status === 403 ) {
+						const data = await response.json()
+						setStore({ alert: {
+							text: data.message,
+							background: 'danger',
+							visible: true
+						},})
+						return
+					}
+					if (response.status === 404 ) {
+						const data = await response.json()
+						setStore({ alert: {
+							text: data.message,
+							background: 'danger',
+							visible: true
+						},})
+						return
+					}
+					console.log('error', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				console.log(data);
+				const text = data.results.title
+				setStore({ alert: {
+					text: text,
+					background: 'info',
+					visible: true
+				},})
+	},
 
 			getMessage: async () => {
 				try {

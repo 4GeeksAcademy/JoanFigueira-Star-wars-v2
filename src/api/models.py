@@ -77,6 +77,7 @@ class Medias(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), unique=True)
     post_to = db.relationship('Posts', foreign_keys=[post_id], backref=db.backref('media_to', lazy ='select'))
 
+
 class Followers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     following_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -87,37 +88,93 @@ class Followers(db.Model):
     def __repr__(self):
         return f'following: {self.following_id} - follower: {self.follower_id}'
     
-    def serialize(self):
-            # Do not serialize the password, its a security breach
-        return {'id' : self.id,
-                'following_id' : self.id,
-                'follower_id' : self.id}
+    def serialize_following(self):
+        return {'id' : self.following_to.id,
+                'first_name' : self.following_to.first_name}
+    
+    def serialize_followers(self):
+        return {'id' : self.follower_to.id,
+                'first_name' : self.follower_to.first_name}
 
 
 class CharacterFavorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('favoriteChar_to', lazy='select'))
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'),  nullable=False)
+    character_to = db.relationship('Characters', foreign_keys=[character_id], backref=db.backref('favoriteChars_to', lazy='select'))
+
+    def __repr__(self):
+        return f"Favorite Characters: {self.character_id}"
+    
+    def serialize(self):
+        return {"user_id": self.user_id,
+                "character_name": self.character_to.name,
+                "character_id": self.character_id}
 
 class PlanetFavorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('favoritePlan_to', lazy='select'))
+    planet_id = db.Column(db.Integer, db.ForeignKey("planets.id"))
+    planet_to = db.relationship('Planets', foreign_keys=[planet_id], backref=db.backref('favoritePlans_to', lazy='select'))
+
+    def __repr__(self):
+        return f"Favorite Planets: {self.planet_id}"
+    
+    def serialize(self):
+        return {"user_id": self.user_id,
+                "planet_name": self.planet_to.name,
+                "planet_id": self.planet_id}
+
 
 class Characters(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=False, nullable=False)
-    height = db.Column(db.String, unique=False, nullable=False)
-    mass = db.Column(db.String, unique=False, nullable=False)
-    hair_color = db.Column(db.String, unique=False, nullable=False)
-    skin_color = db.Column(db.String, unique=False, nullable=False)
-    eye_color = db.Column(db.String, unique=False, nullable=False)
-    birth_year = db.Column(db.String, unique=False, nullable=False)
-    gender = db.Column(db.String, unique=False, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
+    height = db.Column(db.String, unique=False, nullable=True)
+    mass = db.Column(db.String, unique=False, nullable=True)
+    hair_color = db.Column(db.String, unique=False, nullable=True)
+    skin_color = db.Column(db.String, unique=False, nullable=True)
+    eye_color = db.Column(db.String, unique=False, nullable=True)
+    birth_year = db.Column(db.String, unique=False, nullable=True)
+    gender = db.Column(db.String, unique=False, nullable=True)
+
+    def __repr__(self):
+        return f'Character: {self.name}'
+    
+    def serialize(self):
+        return {'id':self.id,
+                'name': self.name,
+                'height': self.height,
+                'mass': self.mass,
+                'hair_color': self.hair_color,
+                'skin_color':  self.skin_color,
+                'eye_color': self.eye_color,
+                'birth_year': self.birth_year,
+                'gender': self.gender}
+    
 
 class Planets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=False, nullable=False)
-    diameter = db.Column(db.String, unique=False, nullable=False)
-    rotation_period = db.Column(db.String, unique=False, nullable=False)
-    orbital_period = db.Column(db.String, unique=False, nullable=False)
-    gravity = db.Column(db.String, unique=False, nullable=False)
-    population = db.Column(db.String, unique=False, nullable=False)
-    climate = db.Column(db.String, unique=False, nullable=False)
-    terrain = db.Column(db.String, unique=False, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
+    diameter = db.Column(db.String, unique=False, nullable=True)
+    rotation_period = db.Column(db.String, unique=False, nullable=True)
+    orbital_period = db.Column(db.String, unique=False, nullable=True)
+    gravity = db.Column(db.String, unique=False, nullable=True)
+    population = db.Column(db.String, unique=False, nullable=True)
+    climate = db.Column(db.String, unique=False, nullable=True)
+    terrain = db.Column(db.String, unique=False, nullable=True)
+
+    def __repr__(self):
+        return f'Planet: {self.name}'
+    
+    def serialize(self):
+        return {'id': self.id,
+                'name': self.name,
+                'diameter': self.diameter,
+                'rotation_period': self.rotation_period,
+                'orbital_period': self.orbital_period,
+                'gravity': self.gravity,
+                'population': self.population,
+                'climate': self.climate,
+                'terrain': self.terrain}

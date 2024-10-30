@@ -1,27 +1,50 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export const Login = () => {
-    const {store, actions} = useContext(Context);
+  const { store, actions } = useContext(Context)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
+  const navigate = useNavigate();
 
-    return (
-        <div className="d-flex flex-column flex-lg-row p-3 gap-3 py-lg-5 align-items-center justify-content-center">
-  <form>
-    <h1 className="h3 mb-3 fw-normal">Sign in</h1>
-    <div className="form-floating p-1">
-      <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com"/>
-      <label for="floatingInput">Email address</label>
+  const handleEmail = (event) => setEmail(event.target.value)
+  const handlePassword = (event) => setPassword(event.target.value)
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const dataToSend = { email, password }
+    console.log(dataToSend);
+    actions.login(dataToSend);
+    navigate('/dashboard')
+  }
+
+  return (
+    <div className="container my-5">
+      <div className="row d-flex justify-content-center">
+        <div className="col-10 col-md-8 col-lg-5 border rounded-3">
+          <div className="d-flex justify-content-end pt-2">
+              <button type="button" className="btn-close" aria-label="Close"></button>
+          </div>
+          <h1 className="text-primary">Login</h1>
+          <form onSubmit={handleSubmit} className="py-4 px-2 p-sm-4  p-md-5">
+            <div className="input-group mb-3">
+              <input type="email" className="form-control" placeholder="Email" aria-label="Email"
+                value={email} onChange={handleEmail} aria-describedby="basic-addon1" />
+            </div>
+            <div className="input-group mb-3">
+              <input type={hidePassword ? "password" : 'text'} className="form-control" aria-label="Password" placeholder="Password"
+                value={password} onChange={handlePassword} />
+              <span onClick={() => setHidePassword(!hidePassword)} className="input-group-text">
+                {hidePassword ? <i className="far fa-eye"></i> : <i className="far fa-eye-slash"></i>}
+              </span>
+            </div>
+            <button type="submit" className="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div className="form-floating p-1">
-      <input type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
-      <label for="floatingPassword">Password</label>
-    </div>
-        <Link to="/loginform" className="py-2">
-          <span className="navbar-brand text-primary">New User</span>
-        </Link>
-    <button className="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-  </form>
-</div>
-    )
+  )
 }
